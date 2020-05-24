@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
@@ -22,6 +23,9 @@ public class MainActivity extends MainBaseActivity {
 
     @BindView(R.id.actKeys)
     AutoCompleteTextView actKeys;
+
+    @BindView(R.id.lblAllKeys)
+    TextView lblAllKeys;
 
 
     @Override
@@ -42,9 +46,17 @@ public class MainActivity extends MainBaseActivity {
         });
     }
 
-    @OnClick(R.id.btnAddkey)
+    @OnClick(R.id.btnAddKey)
     public void onBtnAddKeyClicked() {
-        Toast.makeText(getApplicationContext(), "We are there", Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), "We are there", Toast.LENGTH_LONG).show();
+        String key = this.actKeys.getText().toString();
+        String currentKeys = lblAllKeys.getText().toString();
+        lblAllKeys.setText(String.format("%s%s ", currentKeys, key));
+        actKeys.setText("");
+    }
+    @OnClick(R.id.btnSave)
+    public void  saveShortCut(){
+
     }
 
 }
