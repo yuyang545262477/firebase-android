@@ -1,16 +1,17 @@
 package com.android.davidyu.firebase_android;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.android.davidyu.firebase_android.dto.ShortCut;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +28,7 @@ public class MainActivity extends MainBaseActivity {
     @BindView(R.id.lblAllKeys)
     TextView lblAllKeys;
 
+    ArrayList<String> allKeys = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,26 +39,26 @@ public class MainActivity extends MainBaseActivity {
         ButterKnife.bind(this);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show());
     }
 
     @OnClick(R.id.btnAddKey)
     public void onBtnAddKeyClicked() {
-//        Toast.makeText(getApplicationContext(), "We are there", Toast.LENGTH_LONG).show();
         String key = this.actKeys.getText().toString();
+        allKeys.add(key);
         String currentKeys = lblAllKeys.getText().toString();
         lblAllKeys.setText(String.format("%s%s ", currentKeys, key));
         actKeys.setText("");
     }
-    @OnClick(R.id.btnSave)
-    public void  saveShortCut(){
 
+    @OnClick(R.id.btnSave)
+    public void saveShortCut() {
+        ShortCut shortCut = new ShortCut();
+        shortCut.setName(editShortCutName.getText().toString());
+        shortCut.setKeys(allKeys);
+        allKeys = new ArrayList<>();
+        lblAllKeys.setText("");
     }
 
 }
