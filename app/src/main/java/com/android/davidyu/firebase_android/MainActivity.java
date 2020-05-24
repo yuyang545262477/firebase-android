@@ -10,6 +10,8 @@ import androidx.appcompat.widget.Toolbar;
 import com.android.davidyu.firebase_android.dto.ShortCut;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -57,8 +59,14 @@ public class MainActivity extends MainBaseActivity {
         ShortCut shortCut = new ShortCut();
         shortCut.setName(editShortCutName.getText().toString());
         shortCut.setKeys(allKeys);
+
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference reference = firebaseDatabase.getReference();
+        reference.child("root").push().setValue(shortCut);
+
         allKeys = new ArrayList<>();
         lblAllKeys.setText("");
+
     }
 
 }
